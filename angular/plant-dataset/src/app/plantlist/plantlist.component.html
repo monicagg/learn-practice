@@ -1,0 +1,17 @@
+<div>
+  <label>Search by : </label>
+  <select [(ngModel)]="searchBy" placeholder="searchBy">
+    <option value="name">name</option>
+  </select>
+  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+</div>
+
+<ul class="dataset">
+  <li *ngFor="let plantset of datasets$ | async "
+    [class.selected]="plantset === selectedDataset"
+    (click)="onSelect(plantset)">
+    <span class="badge">{{plantset.nrImgs}}</span> {{plantset.name}}
+  </li>
+</ul>
+
+<app-plants [plantDataset]="selectedDataset"></app-plants>

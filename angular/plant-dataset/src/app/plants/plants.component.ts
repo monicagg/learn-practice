@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PlantDataset } from '../plantdataset';
 
 @Component({
@@ -8,13 +8,7 @@ import { PlantDataset } from '../plantdataset';
 })
 export class PlantsComponent implements OnInit {
 
-  plantDataset: PlantDataset = {
-	  name: 'Simulated root images',
-	  organ: 'root-system',
-	  nrImgs: 10000,
-	  groundtruth: 'yes',
-	  homeLink: 'https://zenodo.org/record/61739'
-  };
+  @Input() plantDataset: PlantDataset;
 	
   constructor() { }
 

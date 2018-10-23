@@ -1,0 +1,8 @@
+.selected {
+  font-size: larger;
+}
+
+.dataset li:hover{
+  font-style: italic;
+  font-size: larger;		
+}

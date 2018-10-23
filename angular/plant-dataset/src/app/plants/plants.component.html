@@ -1,6 +1,8 @@
-<h2>{{plantDataset.name | titlecase }} Details</h2>
-<div><span>name: </span>{{plantDataset.name}}</div>
-<div><span>organ: </span>{{plantDataset.organ}}</div>
-<div><span>number images: </span>{{plantDataset.nrImgs}}</div>
-<div><span>groundtruth: </span>{{plantDataset.groundtruth}}</div>
-<div><span>website: </span>{{plantDataset.homeLink}}</div>
+<div *ngIf="plantDataset">
+	<h2>{{plantDataset.name | titlecase }} Details</h2>
+	<div><span>name: </span>{{plantDataset.name}}</div>
+	<div><span>organ: </span>{{plantDataset.organ}}</div>
+	<div><span>number images: </span>{{plantDataset.nrImgs}}</div>
+	<div><span>groundtruth: </span>{{plantDataset.groundtruth}}</div>
+	<div><span>website: </span>{{plantDataset.homeLink}}</div>
+</div>
