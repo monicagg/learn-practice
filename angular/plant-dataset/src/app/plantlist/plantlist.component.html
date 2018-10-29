@@ -10,7 +10,7 @@
   <li *ngFor="let plantset of datasets$ | async "
     [class.selected]="plantset === selectedDataset"
     (click)="onSelect(plantset)">
-    <span class="badge">{{plantset.nrImgs}}</span> {{plantset.name}}
+    <span class="badge">{{plantset.nrImgs}}</span> images in {{plantset.name}}
   </li>
 </ul>
 
