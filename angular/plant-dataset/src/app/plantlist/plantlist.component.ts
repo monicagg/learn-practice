@@ -18,26 +18,27 @@ export class PlantlistComponent implements OnInit {
   datasets$: Observable<PlantDataset[]>;
   @Input() searchBy: string; 
   private searchTerms = new Subject<string>();
-  selectedDataset: PlantDataset;  
+  selectedDataset: PlantDataset;
 	
   constructor(private plantDatasetService: PlantDatasetService) { }
 
   ngOnInit() {
+	  console.log('start ngOnInit');
 	  this.searchBy = "name";
 	  this.datasets$ = this.searchTerms.pipe(
       // wait 500ms after each keystroke before considering the term
       debounceTime(500),
- 
       // ignore new term if same as previous term
       distinctUntilChanged(),
  
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.plantDatasetService.search(this.searchBy, term)),
-    );
+      switchMap((term: string) => this.plantDatasetService.search(this.searchBy, term))
+      );
   }
 
   //Push a search term into the observable stream.
   search(term: string): void {
+	console.log('plantlist component search term: ' + term);
     this.searchTerms.next(term);
   }
   

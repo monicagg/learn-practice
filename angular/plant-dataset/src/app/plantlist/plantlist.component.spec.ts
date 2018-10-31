@@ -1,11 +1,10 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
-import { By }           from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
+
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { asyncData, newEvent } from '../../testing';
-
-import { of, throwError } from 'rxjs';
+import { newEvent } from '../../testing';
 
 import { PlantlistComponent } from './plantlist.component';
 import { PlantDatasetService } from '../plantdataset.service';
@@ -13,32 +12,23 @@ import { DATASETS } from '../plantdataset.service';
 
 let component: PlantlistComponent;
 let fixture: ComponentFixture<PlantlistComponent>;
-let searchSpy: jasmine.Spy;
 let page: Page;
 
 describe('PlantlistComponent', () => {
 
+  beforeEach(async(() => {
+	  TestBed.configureTestingModule({
+	        declarations: [ PlantlistComponent ],
+	        schemas: [ NO_ERRORS_SCHEMA ]
+	      })
+	  .compileComponents()
+	  .then(createComponent);
+  }));
+  
   beforeEach(() => {
-	// Create a fake service object with a `method` spy
-    const plantDatasetServiceSpy = jasmine.createSpyObj('PlantDatasetService', ['search']);
-    // Make the spy return a synchronous Observable with the test data
-    searchSpy = plantDatasetServiceSpy.search.and.returnValue( asyncData(DATASETS) );
 	  
-    TestBed.configureTestingModule({
-        declarations: [ PlantlistComponent ],
-        providers: [ { provide: PlantDatasetService, useValue: plantDatasetServiceSpy } ],
-        schemas: [ NO_ERRORS_SCHEMA ]
-      });
-      
-    fixture = TestBed.createComponent(PlantlistComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    return fixture.whenStable().then(() => {
-    	fixture.detectChanges();
-    	page = new Page();
-    });
   });
-
+    
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -49,16 +39,19 @@ describe('PlantlistComponent', () => {
 	  
   it('1st row should match first datasets element', fakeAsync(() => {
 	  const expectedDataset = DATASETS[0];
-	  page.searchInput.value = 'image';
+	  const searchTerm = 'image';
+	  page.searchInput.value = searchTerm;
 	  // dispatch a DOM event so that Angular learns of input value change.
-	  page.searchInput.dispatchEvent(newEvent('input')); // tell Angular
-	  // Tell Angular to update the display
-	  fixture.detectChanges(); // ngOnInit()
-	  tick();
+	  //Didn't work for keyup event, only if changed to click
+	  //page.searchInput.dispatchEvent(newEvent('input')); // tell Angular 
+	  page.searchInputDe.triggerEventHandler('keyup', null);
+	  
+	  fixture.detectChanges(); //update view
+	  // Wait for the debounceTime(500)
+      tick(500);
+      //console.log('test rows after tick 500');
 	  fixture.whenStable().then(() => {
 		  fixture.detectChanges(); //update view
-		  const lrows = fixture.debugElement.nativeElement.querySelectorAll('li');
-		  expect(lrows.length).toBe(2);
 		  const actualDataset = page.rows.length==0?null:page.rows[0].textContent;
 		  expect(actualDataset).toContain(expectedDataset.nrImgs.toString(), 'nrImgs');
 		  expect(actualDataset).toContain(expectedDataset.name, 'name');
@@ -66,11 +59,31 @@ describe('PlantlistComponent', () => {
   }));
 });
 
+/////////// Helpers /////
+
+/** Create the component and set the `page` test variables */
+function createComponent() {
+    fixture = TestBed.createComponent(PlantlistComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    return fixture.whenStable().then(() => {
+    	fixture.detectChanges();
+    	page = new Page();
+    });
+}
+
 class Page {
 	/** line elements */
-	get rows() { return this.queryAll<HTMLElement>('li');}
+	get rows(): HTMLElement[] { return this.queryAll<HTMLElement>('li');}
 	
-	get searchInput()   { return this.query<HTMLInputElement>('input');}
+	get searchInput(): HTMLInputElement {
+		return fixture.debugElement.query(By.css('input')).nativeElement;
+	}
+	
+	get searchInputDe(): DebugElement {
+		return fixture.debugElement.query(By.css('input'));
+	}
+	
 	////query helpers ////
 	private query<T>(selector: string): T {
 		return fixture.debugElement.nativeElement.querySelector(selector);
