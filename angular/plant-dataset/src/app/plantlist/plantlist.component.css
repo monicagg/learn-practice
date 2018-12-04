@@ -2,7 +2,7 @@
   font-size: larger;
 }
 
-.dataset li:hover{
+.mat-list-item div:hover{
   font-style: italic;
   font-size: larger;		
 }

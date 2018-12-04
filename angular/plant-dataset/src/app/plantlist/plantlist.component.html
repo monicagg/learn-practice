@@ -1,3 +1,4 @@
+<mat-card>
 <div>
   <label>Search by : </label>
   <select [(ngModel)]="searchBy" placeholder="searchBy">
@@ -6,12 +7,12 @@
   <input #searchBox id="search-box" (keyup)="search(searchBox.value)"/>
 </div>
 
-<ul class="dataset">
-  <li *ngFor="let plantset of datasets$ | async "
+<mat-list>
+  <mat-list-item *ngFor="let plantset of datasets$ | async "
     [class.selected]="plantset === selectedDataset"
     (click)="onSelect(plantset)">
-    <span class="badge">{{plantset.nrImgs}}</span> images in {{plantset.name}}
-  </li>
-</ul>
-
+    <div><span class="badge">{{plantset.nrImgs}}</span> images in {{plantset.name}}</div>
+  </mat-list-item>
+</mat-list>
+</mat-card>
 <app-plants [plantDataset]="selectedDataset"></app-plants>
