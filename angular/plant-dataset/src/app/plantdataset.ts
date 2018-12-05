@@ -1,7 +1,7 @@
 export class PlantDataset {
-	name: string;
-	organ: string;
-	nrImgs: number;
-	groundtruth: string;
-	homeLink: string;
+	albumId: number;
+	id: number;
+	title: string;
+	url: string;
+	thumbnailUrl: string;
 }

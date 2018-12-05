@@ -2,7 +2,7 @@
 <div>
   <label>Search by : </label>
   <select [(ngModel)]="searchBy" placeholder="searchBy">
-    <option value="name">name</option>
+    <option value="title">title</option>
   </select>
   <input #searchBox id="search-box" (keyup)="search(searchBox.value)"/>
 </div>
@@ -11,7 +11,7 @@
   <mat-list-item *ngFor="let plantset of datasets$ | async "
     [class.selected]="plantset === selectedDataset"
     (click)="onSelect(plantset)">
-    <div><span class="badge">{{plantset.nrImgs}}</span> images in {{plantset.name}}</div>
+    <div><span class="badge">{{plantset.id}}</span> - {{plantset.title}}</div>
   </mat-list-item>
 </mat-list>
 </mat-card>

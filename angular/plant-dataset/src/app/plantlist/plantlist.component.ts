@@ -25,7 +25,7 @@ export class PlantlistComponent implements OnInit {
 
   ngOnInit() {
 	  console.log('start ngOnInit');
-	  this.searchBy = "name";
+	  this.searchBy = "title";
 	  this.datasets$ = this.searchTerms.pipe(
       // wait 500ms after each keystroke before considering the term
       debounceTime(500),

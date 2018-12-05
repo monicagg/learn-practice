@@ -1,11 +1,10 @@
 <mat-card *ngIf="plantDataset">
-	<mat-card-title>{{plantDataset.name | titlecase }} Details</mat-card-title>
+	<mat-card-title>Album {{plantDataset.albumId}} Details</mat-card-title>
 	<mat-card-content>
-		<div><span>name: </span>{{plantDataset.name}}</div>
-		<div><span>organ: </span>{{plantDataset.organ}}</div>
-		<div><span>number images: </span>{{plantDataset.nrImgs}}</div>
-		<div><span>groundtruth: </span>{{plantDataset.groundtruth}}</div>
-		<div><span>website: </span>{{plantDataset.homeLink}}</div>
+		<div><span>id: </span>{{plantDataset.id}}</div>
+		<div><span>title: </span>{{plantDataset.title}}</div>
+		<div><span>url: </span>{{plantDataset.url}}</div>
+		<div><span>thumbnailUrl: </span>{{plantDataset.thumbnailUrl}}</div>
 	</mat-card-content>
 	
 <mat-card-actions><button mat-button color="primary">Edit</button></mat-card-actions>	
