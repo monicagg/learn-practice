@@ -1,0 +1,68 @@
+<html>
+<head>
+	<title>MOOC: Each Data Visualisation with D3</title>
+	
+	<style>
+
+	</style>
+
+</head>
+<body>
+	
+	<div id="chart"></div>
+	
+	<script src="d3.min.js"></script>
+	
+	<script>
+			
+	// the list of the headers in the input csv file (not including the timestamp)
+	var headers = ["Big data modelling and analysis",
+	"Data generation and capture",
+	"Data storage, access and manipulation",
+	"Data-driven decision making under uncertainty",
+	"Designing for data generation and capture",
+	"Making data-driven insights",
+	"Monitoring and evaluation",
+	"Visualising big data models and analysis"
+	];
+	
+	var selectedHeader = headers[7];
+	
+	d3.select("body").append("h1").text("Answers for - " + selectedHeader);
+	
+	d3.csv("MOOC_data.csv")
+		.then(function(data) {
+			console.log(data);
+			drawMOOC(data);
+		});
+	
+	function drawMOOC(dataset) {
+		var xySpace = 1;
+		var maxCells = 25;
+		var squareW = 18;
+				
+		const svgElem = d3.select("body").append("svg")
+			.attr("width", 1200)
+			.attr("height", 1200);
+		
+		// create a colour scale using d3's default colour scale tool, we only need 5 colours, but the scale makes 10 or 20.
+		dotColour = d3.scaleOrdinal(d3.schemeCategory10);
+			
+		svgElem.selectAll("rect")
+			.data(dataset)
+			.enter().append("rect")
+			.attr("width", squareW)
+			.attr("height", squareW)
+			.attr("x", (d,i) => (squareW + xySpace) * (i%maxCells) + xySpace)
+			.attr("y", (d,i) => (squareW + xySpace) * Math.trunc(i/maxCells))
+			.attr("fill", (d) => dotColour(d[selectedHeader]))
+			.append("title")
+			.attr("x", (d,i) => (squareW + xySpace) * (i%maxCells) + xySpace)
+			.attr("y", (d,i) => (squareW + xySpace) * Math.trunc(i/maxCells))
+			.text( (d,i) => "answer " + (i+1) + ": " + d[selectedHeader]);
+	}
+	</script>
+</body>
+</html>	
+	
+	
