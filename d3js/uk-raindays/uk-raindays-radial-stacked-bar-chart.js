@@ -1,19 +1,3 @@
-<html>
-<head>
-	<title>UK Raindays - Radial Stacked Bar Chart with D3</title>
-	
-	<style>
-
-	</style>
-
-</head>
-<body>
-	
-	<div id="chart"></div>
-	
-	<script src="d3.min.js"></script>
-	
-	<script>
 // URL: https://observablehq.com/@monicagg/uk-raindays-radial-stacked-bar-chart
 // Title: UK Raindays - Radial Stacked Bar Chart
 // Author: Monica Guzik (@monicagg)
@@ -69,9 +53,7 @@ Radial layouts are pretty, but may impede comparison, so consider them primarily
       name: "data",
       inputs: ["d3"],
       value: (function(d3){return(
-d3.csv("https://raw.githubusercontent.com"
-    + "/monicagg/learn-practice/master"
-    + "/d3js/UK_raindays.csv", (d, _, columns) => {
+d3.csv("UK_raindays.csv", (d, _, columns) => {
   let total = 0;
   d.total = d[columns[columns.length-1]];
   return d;
@@ -249,9 +231,3 @@ const notebook = {
 };
 
 export default notebook;
-
-	</script>
-</body>
-</html>	
-	
-	
