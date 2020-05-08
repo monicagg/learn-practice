@@ -1,9 +1,14 @@
 {
-  "name": "uk-raindays-radial-stacked-bar-chart",
-  "main": "uk-raindays-radial-stacked-bar-chart.js",
-  "version": "248.0.0",
+  "name": "@monicagg/uk-raindays-radial-stacked-bar-chart",
+  "main": "b752b62685ddb111@289.js",
+  "version": "289.0.0",
+  "homepage": "https://observablehq.com/@monicagg/uk-raindays-radial-stacked-bar-chart",
   "author": {
-    "name": "Monica Guzik",
+    "name": "Monica G",
     "url": "https://observablehq.com/@monicagg"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
   }
 }
