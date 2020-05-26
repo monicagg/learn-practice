@@ -6,7 +6,7 @@ md`# Form Input`
 )});
   iform.variable(observer("viewof object")).define("viewof object", ["form","html"], function(form,html){return(
 form(html`<form>
-  <div><label><input name="title" type="text" value="Chart Title"> <i>type the title</i></label></div>
+  <div><label><input name="title" type="text" value="Radial Stacked Bar Chart" size="26"> <i>type the title</i></label></div>
   <div>
     <label><input name="season" type="radio" value="win"> <i>winter</i></label>
     <label><input name="season" type="radio" value="spr" checked> <i>spring</i></label>
@@ -19,31 +19,6 @@ form(html`<form>
   iform.variable(observer("object")).define("object", ["Generators", "viewof object"], (G, _) => G.input(_));
   iform.variable(observer()).define(["object"], function(object){return(
 object
-)});
-  iform.variable(observer()).define(["html","svg","object"], function(html,svg,object){return(
-html`<svg
-  width="640"
-  height="64"
-  viewBox="0 0 640 64"
-  style="width:100%;max-width:640px;height:auto;display:block;"
->
-  ${Object.assign(
-    svg`<text
-    x="50%"
-    y="50%"
-    text-anchor="middle" 
-    dy="0.35em"
-    font-size="larger"
-  >`,
-    {
-      textContent: `${object.title} ${object.season}`
-    }
-  )}
-</svg>`
-)});
-  iform.variable(observer()).define(["md"], function(md){return(
-md`---
-## Implementation`
 )});
   iform.variable(observer("form")).define("form", ["html","formValue"], function(html,formValue){return(
 function form(form) {

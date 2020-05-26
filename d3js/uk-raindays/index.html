@@ -12,9 +12,10 @@ import {Runtime, Library, Inspector} from "./runtime.js";
 const runtime = new Runtime();
 const form = runtime.module(formInput, Inspector.into(document.getElementById("formID")));
 const main = runtime.module(chart, Inspector.into(document.body));
+main.variable().import("object", form);
 
 form.value("object").then( function(obj) {
-    console.log("title= " + obj.title);
+    console.log("index object.title= " + obj.title);
     return;
     }
 );

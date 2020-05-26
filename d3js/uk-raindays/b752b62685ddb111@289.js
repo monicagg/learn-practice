@@ -1,9 +1,9 @@
 // https://observablehq.com/@monicagg/uk-raindays-radial-stacked-bar-chart@289
 export function chart(runtime, observer) {
   const main = runtime.module(); 
-
-  main.variable(observer()).define(["md"], function(md){return(
-md`# UK Raindays - Radial Stacked Bar Chart
+  
+  main.variable(observer()).define(["md", "object"], function(md,object){return(
+md`# UK Raindays - ${object.title}
 
 Circular barplots are pretty, they are primarily use to present obvious cyclical patterns in large rows of data. 
 
@@ -11,7 +11,7 @@ Below, starting from center, each year is compound by the numer of raindays in w
 
 In term of comparison, first bar shows raindays in winter in different years, and the stacked bars illustrate changes for a whole year.`
 )});
-  main.variable(observer("chart")).define("chart", ["d3","DOM","width","height","data","startCol","endColDiff","z","arc","xAxis","yAxis","legend"], function(d3,DOM,width,height,data,startCol,endColDiff,z,arc,xAxis,yAxis,legend)
+  main.variable(observer("chart")).define("chart", ["d3","DOM","width","height","data","startCol","endColDiff","z","arc","xAxis","yAxis","legend","object"], function(d3,DOM,width,height,data,startCol,endColDiff,z,arc,xAxis,yAxis,legend,object)
 {
   const svg = d3.select(DOM.svg(width, height))
       .attr("viewBox", `${-width / 2} ${-height / 2} ${width} ${height}`)
@@ -98,7 +98,7 @@ d3.scaleBand()
   // This scale maintains area proportionality of radial bars!
   const y = d3.scaleLinear()
       .domain([0, d3.max(data, function(d) {
-        if (endColDiff==1) {
+        if (endColDiff===1 && startCol===13) {
             return +d[data.columns[data.columns.length-1]];
         }
         let colSum = 0;
@@ -142,7 +142,7 @@ g => g
     .attr("text-anchor", "middle")
     .call(g => g.append("text")
         .attr("y", d => -y(y.ticks(5).pop()))
-        .attr("dy", "-1em")
+        .attr("dy", "-0.7em")
         .text("Rain days"))
     .call(g => g.selectAll("g")
       .data(y.ticks(5).slice(1))
@@ -178,12 +178,28 @@ g => g.append("g")
         .attr("dy", "0.35em")
         .text(d => d))
 )});
-  main.variable(observer("startCol")).define("startCol", function(){return(
-13
-)});
-  main.variable(observer("endColDiff")).define("endColDiff", function(){return(
-1
-)});
+  main.variable(observer("startCol")).define("startCol",["object"], function(object) {
+    if (object.season==='spr') {
+        return(14);
+    } else if (object.season==='sum') {
+        return(15);
+    } else if (object.season==='aut') {
+        return(16);
+    }
+    return(13);
+    });
+  main.variable(observer("endColDiff")).define("endColDiff", ["object"], function(object){
+    if (object.season==='win') {
+        return(4);
+    } else if (object.season==='spr') {
+        return(3);
+    } else if (object.season==='sum') {
+        return(2);
+    } else if (object.season==='aut') {
+        return(1);
+    }
+    return(1);
+  });
   main.variable(observer("width")).define("width", function(){return(
 686
 )});
